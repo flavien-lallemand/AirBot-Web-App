@@ -1,4 +1,5 @@
 # app-air-bot
+![Screenshot](./publi/demo.png)
 
 ## Project setup
 ```
