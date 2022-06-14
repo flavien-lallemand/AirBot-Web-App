@@ -13,9 +13,9 @@
           style="display: flex; height: fit-content; width: 100%;row-gap: 25px;"
           :id="'message-' + index"
       >
-        <div class="message-wrapper"  v-if="message.sender === 'bot'">
+        <div class="message-wrapper" v-if="message.sender === 'bot'">
           <div class="container">
-            <span class="profil-picture-bot" ></span>
+            <span class="profil-picture-bot"></span>
             <div class="message-container">
               <p>{{
                   message.message
@@ -25,7 +25,8 @@
           </div>
 
         </div>
-        <div class="message-wrapper"  v-else>
+
+        <div class="message-wrapper" v-else>
           <div class="container-client">
             <div class="message-container-client">
               <p>{{
@@ -33,10 +34,33 @@
                 }}</p>
 
             </div>
-            <span class="profil-picture-client" ></span>
+            <span class="profil-picture-client"></span>
           </div>
 
         </div>
+
+
+
+      </div>
+      <div>
+        <div class="message-wrapper" v-show="bot_typing">
+          <div class="container">
+            <span class="profil-picture-bot"></span>
+            <div class="message-container" style="width:15%;">
+              <div class="currently-typing-wrapper">
+
+                <div class="container-dot" >
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
       </div>
 
     </div>
@@ -44,9 +68,8 @@
     <div id="footer">
       <input placeholder="Send a message..." v-model="new_message" @keyup.enter="sendMessage">
       <span @click="sendMessage">
-        <font-awesome-icon id="paper-plane-icon" icon="fa-solid fa-paper-plane" />
+        <font-awesome-icon id="paper-plane-icon" icon="fa-solid fa-paper-plane"/>
       </span>
-
 
 
     </div>
@@ -55,35 +78,39 @@
 
 <script>
 import axios from 'axios';
+
 export default {
   name: 'Chatbot',
   data: function () {
     return {
       new_message: null,
-      messages: [
-
-      ]
+      bot_typing:false,
+      messages: []
     }
   },
   methods: {
-    sendMessage: function(){
+    sendMessage: function () {
+      this.bot_typing = true;
       let data = {
-        message : this.new_message
+        message: this.new_message
       }
       this.addMessage('client', this.new_message)
       this.new_message = null
 
       axios.get("http://127.0.0.1:5000?message=" + data.message)
-      .then(res =>{
-        this.addMessage('bot', res.data)
-      })
+          .then(res => {
+            this.addMessage('bot', res.data)
+            this.bot_typing = false;
+          })
+
+
 
     },
 
-    addMessage: function(sender, message){
+    addMessage: function (sender, message) {
       this.messages.push({
         sender: sender,
-        message : message
+        message: message
       })
     },
 
@@ -108,7 +135,7 @@ export default {
           message: "Hi 👋 AirBot here!\n" +
               "                What brings you to Matrix Airlines today?"
         },
-        )
+    )
 
     console.log(this.messages)
   }
@@ -117,9 +144,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#wrapper{
+#wrapper {
   height: 60%;
-  width:25%;
+  width: 25%;
   background-color: white;
   border-radius: 10px;
 
@@ -131,7 +158,7 @@ export default {
 
 }
 
-#header{
+#header {
   display: flex;
   flex-direction: column;
   background: linear-gradient(107.59deg, #304BE2 -0.59%, #0F28A1 100%);
@@ -147,7 +174,7 @@ export default {
   padding-bottom: 20px;
 }
 
-#header h3{
+#header h3 {
   font-family: 'Helvetica';
   font-style: normal;
   font-weight: 300;
@@ -155,7 +182,7 @@ export default {
   line-height: 23px;
 }
 
-#header p{
+#header p {
   font-family: 'Helvetica';
   font-style: normal;
   font-weight: 300;
@@ -164,12 +191,12 @@ export default {
   color: #B8C0F0;
 }
 
-#header *{
+#header * {
   margin: 0;
   text-align: left;
 }
 
-#body{
+#body {
   width: 100%;
   height: 65%;
   overflow: scroll;
@@ -184,8 +211,8 @@ export default {
 
 }
 
-#footer{
-  height:12.5%;
+#footer {
+  height: 12.5%;
   border-radius: 0 0 10px 10px;
   border-top: 1px solid #E6E6E6;
   display: flex;
@@ -193,7 +220,7 @@ export default {
   align-items: center;
 }
 
-#footer input{
+#footer input {
   flex: 4;
   height: 90%;
   border: none;
@@ -201,7 +228,8 @@ export default {
   border-radius: 10px;
 
 }
-#footer input:focus{
+
+#footer input:focus {
 
   outline: none;
 
@@ -219,20 +247,20 @@ export default {
   margin-right: 5%;
 }
 
-#paper-plane-icon{
+#paper-plane-icon {
   font-size: 17.5px;
   color: white;
 
 }
 
-.message-wrapper{
+.message-wrapper {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
   width: 100%;
 }
 
-.container{
+.container {
   display: flex;
   height: 100%;
   width: 100%;
@@ -241,7 +269,7 @@ export default {
   column-gap: 5px;
 }
 
-.profil-picture-bot{
+.profil-picture-bot {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -256,7 +284,7 @@ export default {
   background-size: cover;
 }
 
-.container-client{
+.container-client {
   display: flex;
   height: 100%;
   width: 100%;
@@ -266,12 +294,12 @@ export default {
   column-gap: 5px;
 }
 
-.message-container{
+.message-container {
   display: flex;
-width: 60%;
+  width: 60%;
   background-color: #F5F5F5;
   color: black;
-  padding:0 3.5%;
+  padding: 0 3.5%;
   border-radius: 5px;
   white-space: pre-line;
 
@@ -283,12 +311,12 @@ width: 60%;
 
 }
 
-.message-container-client{
+.message-container-client {
   display: flex;
   width: 60%;
   background-color: #314CE3;
   color: white;
-  padding:0 3.5%;
+  padding: 0 3.5%;
   border-radius: 5px;
   white-space: pre-line;
 
@@ -298,6 +326,54 @@ width: 60%;
   font-size: 14px;
   line-height: 16px;
 
+}
+
+
+/* Typing indicator effect css */
+/* include typing indicator style */
+.currently-typing-wrapper {
+  background: inherit;
+  padding: 12px 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  column-gap: 20px;
+
+}
+
+.container-dot {
+  display: flex;
+  column-gap: 2px;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  display: inline-block;
+  background-color: #B4B5B9;
+  animation: 1.2s typing-dot ease-in-out infinite;
+}
+
+.dot:nth-of-type(2) {
+  animation-delay: 0.15s;
+}
+
+.dot:nth-of-type(3) {
+  animation-delay: 0.25s;
+}
+
+@keyframes typing-dot {
+  15% {
+    transform: translateY(-35%);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
 }
 
 </style>
