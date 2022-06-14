@@ -1,4 +1,5 @@
-# app-air-bot
+# NLP Chatbot project - Matrix airlines inc.
+![Screenshot](./public/demo.png)
 
 ## Project setup
 ```
@@ -22,4 +23,5 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
 # AirBot-Web-App
