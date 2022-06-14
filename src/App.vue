@@ -26,7 +26,8 @@ export default {
   margin-top: 0;
   width:100%;
   height:100vh;
-  background-color: #E8EBFB;
+  background-image:url('../public/background.png');
+;
 
   display: flex;
   justify-content: center;
