@@ -1,5 +1,5 @@
 # app-air-bot
-![Screenshot](./publi/demo.png)
+![Screenshot](./public/demo.png)
 
 ## Project setup
 ```
